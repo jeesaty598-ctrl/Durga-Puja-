@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>दुर्गा पूजा की शुभकामनाएँ!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            width: 100%;
+            min-height: 100vh; /* Ensures body takes full screen height initially, allows it to grow */
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden; /* Keep horizontal hidden */
+        }
+        body {
+            font-family: 'Noto Sans Devanagari', 'Hind Siliguri', sans-serif;
+            background: linear-gradient(135deg, #f7d9d9, #ffebeb); /* Light pinkish gradient */
+            color: #333;
+            display: flex;
+            flex-direction: column; /* Changed to column to stack children vertically */
+            align-items: center; /* Center children horizontally */
+            text-align: center;
+        }
+        .wish-card {
+            background-color: #ffffff;
+            padding: 25px; /* Adjust padding as needed for content and ads */
+            margin: 20px auto; /* Provides 20px top/bottom margin, centers horizontally */
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            max-width: 400px; /* Mobile-friendly width */
+            width: 90%; /* Take 90% of parent width, up to max-width */
+            box-sizing: border-box;
+            border: 2px solid #ff69b4; /* Pink border */
+            position: relative;
+            overflow: hidden; /* For decorative elements and to contain content */
+            flex-shrink: 0; /* Prevent the card from shrinking if flex items inside it are too large */
+        }
+        .wish-card::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            /* Optional: light background pattern */
+            /* background: url('https://i.ibb.co/v4bJ57n/mandala-bg.png') repeat center center; */
+            opacity: 0.05;
+            z-index: 0;
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 1; /* Ensure content is above background pattern */
+        }
+        .user-name {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #8b0000; /* Dark red */
+            margin-bottom: 20px;
+            animation: slideInFromTop 1s ease-out forwards;
+            position: relative; /* For animation */
+        }
+        .durga-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 3px solid #ffd700; /* Gold border */
+            animation: fadeInScale 1.5s ease-out forwards;
+        }
+        .wish-message {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 25px;
+            animation: slideInFromBottom 1s ease-out forwards;
+            animation-delay: 0.5s; /* Delay message animation */
+            opacity: 0; /* Initially hidden for animation */
+        }
+        .wish-message strong { /* Added style for strong tag inside wish-message */
+            font-weight: 700; /* Ensure it's bold */
+        }
+        .signature {
+            font-size: 1.2em; /* Slightly bigger */
+            font-weight: 700; /* More bold */
+            color: #8b0000;
+            margin-top: 20px;
+            animation: fadeIn 2s ease-out forwards;
+            animation-delay: 1s; /* Delay signature animation */
+            opacity: 0;
+        }
+        /* Make the sender name in signature even bolder and possibly slightly bigger */
+        .signature #senderSignature {
+            font-size: 1.1em; /* Slightly bigger than parent .signature text */
+            font-weight: 800; /* Even bolder */
+        }
+
+        /* Share Section */
+        .share-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #ff69b4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            animation: fadeIn 2.5s ease-out forwards;
+            animation-delay: 1.5s;
+            opacity: 0;
+        }
+        .share-section p { /* Make paragraph text in share section bold */
+            font-weight: 700;
+        }
+        .share-section input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+            text-align: center;
+        }
+        /* Style for placeholder text to make it bold */
+        .share-section input::placeholder {
+            font-weight: 700;
+            color: #888; /* Adjust color if needed for contrast */
+        }
+        .share-section button {
+            background-color: #ff69b4; /* Pink share button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .share-section button:hover {
+            background-color: #e05c9f;
+        }
+        .share-message {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 10px;
+        }
+        /* Ad Styles (optional, adjust as needed) */
+        .ad-container {
+            margin: 15px auto; /* Adds some space around ads and centers them */
+            text-align: center;
+            max-width: 320px; /* To constrain ad width */
+        }
+        /* Special adjustment for the very first ad in content-wrapper for better spacing */
+        .content-wrapper > .ad-container:first-child {
+            margin-top: 0; /* Remove top margin if it's the very first element */
+            margin-bottom: 20px; /* Provide bottom space */
+        }
+
+        /* Footer / Made by section */
+        .footer-info {
+            margin-top: 30px;
+            font-size: 1.1em; /* Made text slightly bigger */
+            font-weight: 700; /* Made text bolder */
+            color: #444; /* Changed color to be more prominent */
+            animation: fadeIn 3s ease-out forwards;
+            animation-delay: 2s;
+            opacity: 0;
+            display: flex; /* To align text and logo horizontally */
+            flex-direction: column; /* Stack them for mobile */
+            align-items: center; /* Center horizontally */
+            gap: 10px; /* Space between text and logo */
+            padding-bottom: 20px; /* Ensure space at the bottom of the page */
+        }
+        .footer-info p {
+            margin: 0; /* Remove default paragraph margin */
+        }
+        .footer-info a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .instagram-logo {
+            width: 40px; /* Increased size of the logo */
+            height: 40px; /* Increased size of the logo */
+            vertical-align: middle; /* Align with text if on same line */
+            transition: transform 0.2s ease;
+        }
+        .instagram-logo:hover {
+            transform: scale(1.1);
+        }
+
+
+        /* Animations */
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideInFromBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive adjustments for 9:16 aspect ratio */
+        @media (max-width: 480px) and (max-height: 800px) { /* Common phone portrait */
+            body { padding: 10px; }
+            .wish-card {
+                width: 95%;
+                margin: 10px auto; /* Adjust margin for smaller screens */
+                padding: 20px;
+            }
+            .user-name { font-size: 1.8em; margin-bottom: 15px; }
+            .durga-image { margin-bottom: 20px; }
+            .wish-message { font-size: 1em; margin-bottom: 20px; }
+            .signature { font-size: 1.1em; } /* Smaller bold for signature on small screens */
+            .signature #senderSignature {
+                font-size: 1.05em; /* Adjust for smaller screens */
+            }
+            .share-section input[type="text"] { width: 90%; }
+            .share-section button { padding: 8px 15px; font-size: 1em; }
+            .ad-container { margin: 10px auto; } /* Smaller margin for ads on small screens */
+            .content-wrapper > .ad-container:first-child {
+                margin-bottom: 15px; /* Adjust bottom margin for first ad on small screens */
+            }
+            .footer-info {
+                font-size: 1em; /* Adjusted for smaller screens */
+                margin-top: 20px;
+                padding-bottom: 15px;
+            }
+            .instagram-logo {
+                width: 35px; /* Slightly smaller logo on small screens */
+                height: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wish-card">
+        <div class="content-wrapper">
+
+            <!-- Ad Slot 1: सबसे ऊपर -->
+            <div class="ad-container">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '4b505c9273cf9161c278efee028f35e2',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/4b505c9273cf9161c278efee028f35e2/invoke.js"></script>
+            </div>
+
+            <!-- User Name -->
+            <h1 class="user-name" id="displayUserName"></h1>
+
+            <!-- Ad Slot 2: "आपको दुर्गा पूजा की हार्दिक शुभकामनाएँ!" के नीचे -->
+            <div class="ad-container">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '4b505c9273cf9161c278efee028f35e2',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/4b505c9273cf9161c278efee028f35e2/invoke.js"></script>
+            </div>
+
+            <!-- Durga Puja Image - YOU NEED TO REPLACE THIS URL -->
+            <img src="https://i.postimg.cc/sXwTy9pZ/IMG-20250926-215144.jpg" alt="दुर्गा माँ" class="durga-image">
+
+            <!-- Ad Slot 3: फोटो के नीचे -->
+            <div class="ad-container">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '4b505c9273cf9161c278efee028f35e2',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/4b505c9273cf9161c278efee028f35e2/invoke.js"></script>
+            </div>
+
+            <!-- Hindi Wish Message -->
+            <p class="wish-message">
+                <strong>
+                    माँ दुर्गा की कृपा से आपका जीवन सुख, शांति, समृद्धि और अपार खुशियों से भर जाए।
+                    यह पावन दुर्गा पूजा आपके लिए नई उम्मीदें और सुनहरे अवसर लेकर आए।
+                    आप और आपके परिवार को हार्दिक शुभकामनाएँ।
+                    <br>
+                    🙏 शुभ दुर्गा पूजा! जय माता दी! 🙏
+                </strong>
+            </p>
+
+            <!-- Ad Slot 4: शुभकामना संदेश के नीचे -->
+            <div class="ad-container">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '4b505c9273cf9161c278efee028f35e2',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/4b505c9273cf9161c278efee028f35e2/invoke.js"></script>
+            </div>
+
+            <!-- Signature/Sender -->
+            <p class="signature">
+                आपको और आपके परिवार को
+                <br>
+                <strong id="senderSignature"></strong> की ओर से ढेरों मंगलकामनाएँ ❤️
+            </p>
+
+            <!-- Share Section -->
+            <div class="share-section">
+                <p><strong>यह शुभकामना संदेश अपने नाम से शेयर करें:</strong></p>
+
+                <input type="text" id="sharerNameInput" placeholder="अपना नाम यहाँ दर्ज करें" aria-label="अपना नाम शेयर करने के लिए दर्ज करें">
+
+                <!-- Ad Slot 6 (जो इनपुट के नीचे और बटन के ऊपर था) -->
+                <div class="ad-container">
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : '4b505c9273cf9161c278efee028f35e2',
+                            'format' : 'iframe',
+                            'height' : 50,
+                            'width' : 320,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/4b505c9273cf9161c278efee028f35e2/invoke.js"></script>
+                </div>
+
+                <button id="shareButton">शेयर करें</button>
+                <p id="shareFeedback" class="share-message"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Made by Maurya Jee and Instagram Link -->
+    <div class="footer-info">
+        <p>Made by Maurya Jee</p>
+        <a href="https://www.instagram.com/maurya__jee__?igsh=MW5zeWkzODUwcHJpZA==" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.postimg.cc/nhVchq9p/instagram.png" alt="Instagram Logo" class="instagram-logo">
+        </a>
+    </div>
+
+    <script>
+        // Function to get query parameter from URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Get recipient's name from URL, e.g., yourpage.com/wish.html?name=Rahul
+        const recipientName = getQueryParam('name');
+        const displayUserNameEl = document.getElementById('displayUserName');
+
+        if (recipientName) {
+            displayUserNameEl.textContent = `${recipientName} को दुर्गा पूजा की हार्दिक शुभकामनाएँ!`;
+        } else {
+            displayUserNameEl.textContent = `आपको दुर्गा पूजा की हार्दिक शुभकामनाएँ!`;
+        }
+
+        // Get sender's name from URL, or use default
+        const senderNameParam = getQueryParam('sender');
+        const senderSignatureEl = document.getElementById('senderSignature');
+        const defaultSender = 'Maurya Jee'; // The original creator's name
+
+        if (senderNameParam) {
+            senderSignatureEl.textContent = senderNameParam;
+        } else {
+            senderSignatureEl.textContent = defaultSender;
+        }
+
+        // Share functionality
+        const sharerNameInput = document.getElementById('sharerNameInput');
+        const shareButton = document.getElementById('shareButton');
+        const shareFeedback = document.getElementById('shareFeedback');
+
+        shareButton.addEventListener('click', async () => {
+            const sharerName = sharerNameInput.value.trim();
+
+            if (!sharerName) {
+                shareFeedback.textContent = 'कृपया शेयर करने के लिए अपना नाम दर्ज करें।';
+                shareFeedback.style.color = 'red';
+                return;
+            }
+
+            // Construct the base URL without any existing query parameters
+            const baseUrl = window.location.origin + window.location.pathname;
+            const shareableLink = `${baseUrl}?sender=${encodeURIComponent(sharerName)}`;
+
+            try {
+                if (navigator.share) {
+                    // Use Web Share API if available
+                    await navigator.share({
+                        title: 'दुर्गा पूजा की शुभकामनाएँ!',
+                        text: `आपको और आपके परिवार को ${sharerName} की ओर से दुर्गा पूजा की हार्दिक शुभकामनाएँ!`,
+                        url: shareableLink,
+                    });
+                    shareFeedback.textContent = 'संदेश सफलतापूर्वक शेयर किया गया!';
+                    shareFeedback.style.color = 'green';
+                } else {
+                    // Fallback for browsers that don't support Web Share API
+                    await navigator.clipboard.writeText(shareableLink);
+                    shareFeedback.textContent = 'लिंक कॉपी कर लिया गया है! इसे शेयर करें।';
+                    shareFeedback.style.color = 'green';
+                }
+            } catch (error) {
+                console.error('Share failed:', error);
+                shareFeedback.textContent = 'शेयर करने में त्रुटि हुई। कृपया पुनः प्रयास करें।';
+                shareFeedback.style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>
